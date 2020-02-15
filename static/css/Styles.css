@@ -4,9 +4,30 @@
 }
 .logoLocation img{
 	display:block;
-	width: 200px;
-	height: 200px;
+	width: 500px;
+	height: 500px;
 }
 .brand{
 	margin-left: 210px;
+}
+.navbar {
+	background-color: #8b4513;
+	overflow:hidden;
+}
+.navbar a{
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 10px 14px;
+	float:left;
+	text-decoration:none;
+}
+.navbar a:hover{
+	background-color:#48240a;
+}
+.active {
+	background-color:#13598b;
+}
+.MainBody{
+	padding-top:10px
 }
