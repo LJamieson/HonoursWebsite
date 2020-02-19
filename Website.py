@@ -39,6 +39,17 @@ def entry():
     dElems = data.fetchall()
     return render_template('entrypage.html', vElems=dElems)
 
+@app.route('/species/<vEntry>')
+def vEntry_page(vEntry):
+    db = get_db()
+    data = db.cursor().execute('SELECT * FROM animals WHERE entry = "'+(vEntry).lower().title()+'"')
+    dElems = data.fetchall()
+    return render_template('entrypage.html', vElems=dElems)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('errorpage.html'), 404
+
 
 
 if __name__ == "__main__":
