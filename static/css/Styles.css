@@ -4,8 +4,8 @@
 }
 .logoLocation img{
 	display:block;
-	width: 500px;
-	height: 500px;
+	width: 200px;
+	height: 200px;
 }
 .brand{
 	margin-left: 210px;
@@ -30,4 +30,10 @@
 }
 .MainBody{
 	padding-top:10px
+}
+.entryImage{
+	float: right;
+}
+.entryTable {
+	float: right;
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Animal breeds Entry</title>
+    <!--CSS-->
+    <link href=".././static/css/Styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class ="logoLocation">
+      <img class="Logo" src="/static/img/NonspecificAnimal.png">
+      </div>
+      <div class="brand">
+        <h1> Animal breeds </h1>
+        </div>
+        <div class="navbar">
+          <a href="../">Home</a>
+          <a href="#AddEntry">Add new entry</a>
+          <a href="#Species">Species</a>
+          <a href="#Profile">Profile</a>
+          </div>
+
+          <div class="searchbar">
+            <input type="text" placeholder="Search..">
+            <button type="submit">Submit</button>
+          </div>
+
+    <div class="MainBody">
+      {% for vElem in vElems %}
+      <h2>{{ vElem[1]}}</h2>
+      <p>Text and information about the animal</p>
+    <img class="entryImage" src="https://via.placeholder.com/225.png?text=Entry"/>
+    <div class="entryTable">
+      <table>
+        <tr>
+          <th>Information</th>
+          <th>Details</th>
+        </tr>
+        <tr>
+          <td>Family</td>
+          <td>{{vElem[2]}}</td>
+        </tr>
+        <tr>
+          <td>Average Life span</td>
+          <td>{{vElem[3]}}</td>
+        </tr>
+        <tr>
+          <td>Type of</td>
+          <td>{{vElem[4]}}</td>
+        </tr>
+      </table>
+    </div>
+    </div>
+  {% endfor %}
+  </body>
+</html>
