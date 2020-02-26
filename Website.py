@@ -26,28 +26,58 @@ def init_db():
         db.commit()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        search = request.form['vElemSearch']
+        return search_results(search)
     return render_template('homepage.html')
+
+@app.route('/results/<vElemSearch>', methods=['GET', 'POST'])
+def search_results(vElemSearch):
+    db = get_db()
+    data = db.cursor().execute('SELECT entry FROM animals WHERE entry LIKE "'+vElemSearch+'"')
+    dElems = data.fetchall()
+    if request.method == 'POST':
+        search = request.form['vElemSearch']
+        return search_results(search)
+    return render_template('results.html', vElems=dElems)
 
 @app.route('/entry/')
 def entry():
     db = get_db()
-    db.cursor().execute('insert into animals(entry, family, lifeSpan, typeOf) values ("Labrador", "Canine", "10-14 Years", "Dog")')
+    records = [(1,"Labrador", "Canine", "10-14 Years", "Dog"), (2, "Pomeranian", "Canine", "12-16 Years", "Dog"),(3, "Highland-Cattle", "Bovidae", "20 Years", "Cattle")]
+    db.cursor().executemany('insert into animals values (?,?,?,?,?);',records);
     db.commit()
-    data = db.cursor().execute('SELECT * FROM animals WHERE entry = "Labrador"')
-    dElems = data.fetchall()
-    return render_template('entrypage.html', vElems=dElems)
+    #data = db.cursor().execute('SELECT * FROM animals WHERE entry = "Labrador"')
+    #dElems = data.fetchall()
+    return render_template('homepage.html')#, vElems=dElems)
 
-@app.route('/species/<vEntry>')
+@app.route('/species', methods=['GET', 'POST'])
+def species():
+    db = get_db()
+    data = db.cursor().execute('SELECT entry FROM animals')
+    dElems = data.fetchall()
+    if request.method == 'POST':
+        search = request.form['vElemSearch']
+        return search_results(search)
+    return render_template('speciespage.html', vElems=dElems)
+
+@app.route('/species/<vEntry>', methods=['GET', 'POST'])
 def vEntry_page(vEntry):
     db = get_db()
     data = db.cursor().execute('SELECT * FROM animals WHERE entry = "'+(vEntry).lower().title()+'"')
     dElems = data.fetchall()
+    if request.method == 'POST':
+        search = request.form['vElemSearch']
+        return search_results(search)
     return render_template('entrypage.html', vElems=dElems)
 
-@app.errorhandler(404)
+@app.errorhandler(404, methods=['GET', 'POST'])
 def page_not_found(error):
+    if request.method == 'POST':
+        search = request.form['vElemSearch']
+        return search_results(search)
     return render_template('errorpage.html'), 404
 
 

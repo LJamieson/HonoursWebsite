@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Animal breeds 404 error</title>
-    <link href=".././static/css/Styles.css" rel="stylesheet" />
+    <title>Animal breeds Search</title>
+    <link href=".././static/css/Styles.css" rel="stylesheet">
   </head>
   <body>
     <div class="logoLocation">
@@ -12,25 +12,23 @@
     <div class="brand">
       <h1>Animal breeds</h1>
     </div>
-
     <div class="navbar">
       <a href="../">Home</a>
       <a href="#AddEntry">Add new entry</a>
       <a href="../species">Species</a>
       <a href="#Profile">Profile</a>
     </div>
-
     <div class="searchbar">
       <form class="search_form" action="" method="post">
         <input type="text" name="vElemSearch" placeholder="Search..">
         <button type="submit" name="button"></button>
       </form>
     </div>
-
     <div class="MainBody">
-      <h2>404 Error</h2>
-      <p>The page that you were looking for does not exist</p>
-      <p>Please return to a valid page</p>
+      <h2>Search Results</h2>
+      {% for vElem in vElems %}
+      <li><a href="/species/{{vElem[0]}}">{{ vElem[0]}}</a></li>
+      {% endfor %}
     </div>
   </body>
 </html>

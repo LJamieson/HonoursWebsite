@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Animal breeds Profile</title>
+    <link href=".././static/css/Styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="logoLocation">
+      <img class="Logo" src="/static/img/NonspecificAnimal.png">
+    </div>
+    <div class="brand">
+      <h1>Animal breeds</h1>
+    </div>
+
+    <div class="navbar">
+      <a href="../">Home</a>
+      <a href="#AddEntry">Add new entry</a>
+      <a href="../species">Species</a>
+      <a href="#Profile">Profile</a>
+    </div>
+
+    <div class="searchbar">
+      <form class="search_form" action="" method="post">
+        <input type="text" name="vElemSearch" placeholder="Search">
+        <button type="submit" name="button"></button>
+      </form>
+    </div>
+
+    <div class="MainBody">
+      {% for vElem in vElems}
+    <div class="userImage">
+      <img src="{{ vElem[3] }}" style="width:190px;height:190px;">
+    </div>
+    {% endfor %}
+
+    <p>Change user avatar </p>
+    <form class="changeImage_form" action="" method="post">
+      <input type="text" name="vElemImage" value="">
+      <button type="submit" name="button"></button>
+    </form>
+
+    <p>Change Username</p>
+    <form class="changeName_form" action="" method="post">
+      <input type="text" name="vElemName" value="">
+      <button type="submit" name="button"></button>
+    </form>
+
+    <p>Change Password</p>
+    <form class="changePassword_form" action="" method="post">
+      <input type="text" name="vElemPassword" value="">
+      <button type="submit" name="button"></button>
+    </form>
+
+
+
+
+
+    </div>
+
+  </body>
+</html>
