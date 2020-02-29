@@ -28,11 +28,12 @@
     </div>
 
     <div class="MainBody">
-      {% for vElem in vElems}
+      {% for vElem in vElems %}
     <div class="userImage">
-      <img src="{{ vElem[3] }}" style="width:190px;height:190px;">
+      <img src="{{ vElem[2] }}" style="width:190px;height:190px;">
     </div>
     {% endfor %}
+
 
     <p>Change user avatar </p>
     <form class="changeImage_form" action="" method="post">
