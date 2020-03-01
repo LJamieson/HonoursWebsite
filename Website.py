@@ -2,6 +2,7 @@ import sqlite3
 from functools import wraps
 from flask import Flask, g,redirect, render_template, request, session, url_for
 
+
 app = Flask(__name__)
 app.secret_key = 'X9YEm3bxpoV73jQnhxvplmMNk6rGqO4d'
 db_location = './var/database.db'
@@ -25,6 +26,25 @@ def init_db():
         with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
         db.commit()
+
+def check_auth(user, password):
+    db = get_db()
+    data = db.cursor().execute('''SELECT user,password From accounts''')
+    data = data.fetchall()
+    for value in (data):
+        if(user == value[0] and value[1] == password):
+            return True
+
+    return False
+
+def requires_login(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        status = session.get('logged_in', False)
+        if not status:
+            return redirect(url_for('.login'))
+        return f(*args, **kwargs)
+    return decorated
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -69,7 +89,7 @@ def admin():
 @app.route('/species', methods=['GET', 'POST'])
 def species():
     db = get_db()
-    data = db.cursor().execute('SELECT user FROM accounts')
+    data = db.cursor().execute('SELECT entry FROM animals')
     dElems = data.fetchall()
     if request.method == 'POST':
         search = request.form['vElemSearch']
@@ -131,15 +151,38 @@ def login():
 def page_not_found(error):
     return render_template('errorpage.html'), 404
 
-def check_auth(user, password):
+@app.route("/profile", methods=['GET','POST'])
+@requires_login
+def profile():
+    valid =''
     db = get_db()
-    data = db.cursor().execute('''SELECT user,password From accounts''')
+    name = session['current_user']
+    data = db.cursor().execute('SELECT * From accounts WHERE user = "'+name+'"')
     data = data.fetchall()
-    for value in (data):
-        if(user == value[0] and value[1] == password):
-            return True
+    if request.method == 'POST':
+        if('button1' in request.form):
+            newName = request.form['user']
+            db = get_db()
+            db.cursor().execute('UPDATE accounts SET user="'+newName+'" WHERE user ="'+name+'"')
+            db.commit()
+            valid='Username has been changed'
+            session['current_user'] = newName
+        elif('button2' in request.form):
+            newPassword = request.form['password']
+            db = get_db()
+            db.cursor().execute('UPDATE accounts SET password="'+newPassword+'" WHERE user ="'+name+'"')
+            db.commit()
+            valid='Password has been changed'
+        elif('button3' in request.form):
+            newAvatar = request.files['imageFile']
+            newAvatar.save('static/uploads/avatar'+name+'.png')
+            db = get_db()
+            db.cursor().execute('UPDATE accounts SET avatar="/static/uploads/avatar'+name+'.png" WHERE user ="'+name+'"')
+            db.commit()
+            valid='Avatar has been changed'
 
-    return False
+    return render_template('profilepage.html', vElems=data, valid=valid)
+
 
 
 if __name__ == "__main__":

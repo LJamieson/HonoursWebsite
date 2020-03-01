@@ -27,30 +27,34 @@
       </form>
     </div>
 
+    <p>{{ valid }}</p>
+
     <div class="MainBody">
       {% for vElem in vElems %}
     <div class="userImage">
-      <img src="{{ vElem[2] }}" style="width:190px;height:190px;">
+      <img src="{{ vElem[3] }}" style="width:190px;height:190px;">
     </div>
     {% endfor %}
 
 
+
+
     <p>Change user avatar </p>
-    <form class="changeImage_form" action="" method="post">
-      <input type="text" name="vElemImage" value="">
-      <button type="submit" name="button"></button>
+    <form class="changeImage_form" action="" method="post" enctype="multipart/form-data">
+      <input type="file" name="imageFile"/>
+      <button type="submit" name="button3" value="changeImage"></button>
     </form>
 
     <p>Change Username</p>
     <form class="changeName_form" action="" method="post">
-      <input type="text" name="vElemName" value="">
-      <button type="submit" name="button"></button>
+      <input type="text" name="user" value="">
+      <button type="submit" name="button1" value="changeUserName"></button>
     </form>
 
     <p>Change Password</p>
     <form class="changePassword_form" action="" method="post">
-      <input type="text" name="vElemPassword" value="">
-      <button type="submit" name="button"></button>
+      <input type="password" name="password" value="">
+      <button type="submit" name="button2" values="changePassword"></button>
     </form>
 
 
