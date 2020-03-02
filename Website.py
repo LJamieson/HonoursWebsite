@@ -46,6 +46,11 @@ def requires_login(f):
         return f(*args, **kwargs)
     return decorated
 
+@app.route('/logout/')
+def logout():
+    session['logged_in'] = False
+    session['current_user'] = None
+    return redirect(url_for('.home'))
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -106,7 +111,7 @@ def vEntry_page(vEntry):
         return search_results(search)
     return render_template('entrypage.html', vElems=dElems)
 
-@app.route("/signup", methods=['GET', 'POST'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
    valid = ''
    check = False
